@@ -84,6 +84,11 @@
         seconds: 10
 
     - name: Start the tracker container
-      command: docker compose up tracker
+      command: docker compose up  -d tracker
+      args:
+        chdir: "{{ playbook_dir }}/Junior-Dev-Exam"
+
+    - name: Run the tracker container
+      command: docker logs -f btc-tracker
       args:
         chdir: "{{ playbook_dir }}/Junior-Dev-Exam"
