@@ -55,7 +55,8 @@ It includes a Python script that tracks Bitcoin price in **ILS (₪)** every min
 ```bash
 # the .env already inside so there is no need to set env
 
-docker compose up --build
+docker compose build
+docker compose up
 ```
 
 ---
