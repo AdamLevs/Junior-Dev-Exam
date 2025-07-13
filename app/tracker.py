@@ -51,7 +51,6 @@ while True:
         values.append(value)
         cursor.execute("INSERT INTO btc_data (value) VALUES (%s)", (value,))
         conn.commit()
-
         min_v = min(values)
         max_v = max(values)
         avg_v = sum(values) / len(values)
@@ -61,4 +60,4 @@ while True:
     else:
         print("Skipping iteration due to fetch failure.")
 
-    time.sleep(60)  #Refresg the entire loop every 1 min, more that and the API might block us
+    time.sleep(60)  #Refresh the entire loop every 1 min, more that and the API might block us
