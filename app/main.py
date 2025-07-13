@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS btc_data (
 conn.commit()
 
 values = []
-
+# Get the latest Bitcoin price in ILS from CoinGecko API
 def fetch_price():
     url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=ILS'
     try:
@@ -35,6 +35,7 @@ def fetch_price():
         print(f"Failed to fetch price: {e}")
         return None
 
+# Function to determine buy/sell/hold recommendation based on latest price, average, min, and max values
 def get_recommendation(latest, avg, min_v, max_v):
     if latest < avg and latest <= min_v:
         return "Buy"
@@ -43,6 +44,7 @@ def get_recommendation(latest, avg, min_v, max_v):
     else:
         return "Hold"
 
+# Main loop to fetch price every minute and store it in the database
 while True:
     value = fetch_price()
     if value:
@@ -55,7 +57,7 @@ while True:
         avg_v = sum(values) / len(values)
         recommendation = get_recommendation(value, avg_v, min_v, max_v)
 
-        print(f"⏱️  Value: {value} ₪| Min: {min_v} ₪| Max: {max_v} ₪ Avg: {avg_v:.2f} ₪| Recommendation: {recommendation}")
+        print(f"Value: {value} ₪| Min: {min_v} ₪| Max: {max_v} ₪ Avg: {avg_v:.2f} ₪| Recommendation: {recommendation}")
     else:
         print("Skipping iteration due to fetch failure.")
 
