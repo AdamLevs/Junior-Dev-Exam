@@ -2,13 +2,27 @@
   hosts: localhost
   become: yes
   tasks:
+
+    - name: Clone repo if not present
+      block:
+        - name: Check if repo directory exists
+          stat:
+            path: "{{ playbook_dir }}/Junior-Dev-Exam"
+          register: repo_dir
+
+        - name: Clone the repo
+          git:
+            repo: https://github.com/AdamLevs/Junior-Dev-Exam.git
+            dest: "{{ playbook_dir }}/Junior-Dev-Exam"
+          when: not repo_dir.stat.exists
+
     - name: Install Docker
       apt:
         name: docker.io
         state: present
         update_cache: yes
 
-    - name: Install pip and Docker SDK
+    - name: Install pip
       apt:
         name: python3-pip
         state: present
@@ -17,14 +31,28 @@
       pip:
         name: docker
 
-    - name: Install Docker Compose (if missing)
+    - name: Install Docker Compose
       get_url:
-        url: https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-linux-x86_64
+        url: https://github.com/docker/compose/releases/download/v2.38.2/docker-compose-linux-x86_64
         dest: /usr/local/bin/docker-compose
         mode: '0755'
       when: not (ansible_facts.packages | default({})).contains("docker-compose")
 
-    - name: Run docker-compose
-      command: docker-compose up --build -d
+    - name: Build Docker images
+      command: docker-compose build
       args:
-        chdir: "{{ playbook_dir }}"
+        chdir: "{{ playbook_dir }}/Junior-Dev-Exam"
+
+    - name: Start only DB container
+      command: docker-compose up -d db
+      args:
+        chdir: "{{ playbook_dir }}/Junior-Dev-Exam"
+
+    - name: Wait for database to be ready
+      pause:
+        seconds: 10
+
+    - name: Start tracker container
+      command: docker-compose up tracker
+      args:
+        chdir: "{{ playbook_dir }}/Junior-Dev-Exam"
