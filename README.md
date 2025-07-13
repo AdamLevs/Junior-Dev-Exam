@@ -39,6 +39,7 @@ It includes a Python script that tracks Bitcoin price in **ILS (₪)** every min
 │   ├── Dockerfile           # Builds the tracker container
 │   └── requirements.txt     # Python dependencies
 ├── docker-compose.yml       # Defines services: PostgreSQL + Tracker
+├── .env                     # Environment variables for Docker Compose
 ├── playbook.yml             # Ansible playbook to install Docker & run the app (bonus)
 └── README.md                # This file
 ```
