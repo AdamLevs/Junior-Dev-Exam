@@ -1,0 +1,46 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Docker artifacts
+*.log
+docker-compose.override.yml
+docker-compose.dev.yml
+db_data/
+*.pid
+
+# Ansible artifacts
+*.retry
+*.log
+*.cfg
+*.vault
+*.secret
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor settings
+.vscode/
+.idea/
+*.sw?
+*.bak
+*.tmp
+
+# Git merge/conflict files
+*.orig
+*.rej
+
+# Node modules (if frontend exists)
+node_modules/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/

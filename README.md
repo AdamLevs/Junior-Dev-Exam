@@ -56,7 +56,8 @@ It includes a Python script that tracks Bitcoin price in **ILS (₪)** every min
 # the .env already inside so there is no need to set env
 
 docker compose build
-docker compose up
+docker compose up -d
+docker logs -f btc-tracker
 ```
 
 ---
@@ -65,6 +66,7 @@ well you tald me that i need to assume that docker already install, but i instal
 all you need to run (if Ansible installed):
 ```bash
 ansible-playbook playbook.yml
+docker logs -f btc-tracker
 ```
 ---
 ## ENVIRONMENTS
