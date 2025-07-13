@@ -1,0 +1,30 @@
+- name: Setup and run Bitcoin Tracker
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Install pip and Docker SDK
+      apt:
+        name: python3-pip
+        state: present
+
+    - name: Install Docker SDK for Python
+      pip:
+        name: docker
+
+    - name: Install Docker Compose (if missing)
+      get_url:
+        url: https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+      when: not (ansible_facts.packages | default({})).contains("docker-compose")
+
+    - name: Run docker-compose
+      command: docker-compose up --build -d
+      args:
+        chdir: "{{ playbook_dir }}"
