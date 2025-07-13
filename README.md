@@ -44,13 +44,13 @@ It includes a Python script that tracks Bitcoin price in **ILS (₪)** every min
 ```
 ---
 
-## 🚀 How to run
+## How to run
 
-### ⚙️ Prerequisites
+### ⚙Prerequisites
 - Docker is installed (that's the only assumption)
 - Optional: Ansible (if using `playbook.yml`)
 
-### 🔁 Option 1: Run with Docker Compose
+### Option 1: Run with Docker Compose
 ```bash
 # the .env already inside so there is no need to set env
 
